@@ -3,8 +3,8 @@ use std::env;
 
 fn get_image(dir: &str, width: u32, height: u32) {
     let chars = ['@','M','B','H','E','N','R','#','K','W','X','D','F','P','Q','A','S','U','Z','b','d','e','h','x','*','8','G','m','&','0','4','L','O','V','Y','k','p','q','5','T','a','g','n','s','6','9','o','w','z','$','C','I','u','2','3','J','c','f','r','y','%','1','v','7','l','+','i','t','[',']','{','}','?','j','|','(',')','=','~','!','-','/','<','>','"','^','_','\'',';',',',':','`','.',' ',];
-    let div: f32 = 255f32 / chars.len() as f32;
-    let height = (height as f32 / 2.5) as u32; //To account for the text aspect ratio
+    let div: f32 = 256f32 / chars.len() as f32;
+    let height = (height as f32 / 2.5f32) as u32; //To account for the text aspect ratio
 
     let loaded_img = match image::open(dir) {
         Ok(val) => val,
@@ -25,7 +25,7 @@ fn get_image(dir: &str, width: u32, height: u32) {
             let brightness = pixel[0];
 
             //reversed because of black background
-            let idx =  chars.len() - 1 - (brightness as f32 / div) as usize;
+            let idx = chars.len() - 1 - (brightness as f32 / div) as usize;
 
             line.push(chars[idx]);
         }
