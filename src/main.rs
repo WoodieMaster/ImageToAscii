@@ -7,6 +7,7 @@ fn get_image(dir: &str, width: u32, height: u32) {
         '\\','|','(',')','1','{','}','[',']','?','-','_','+','~','<','>','i','!','l','I',';',':',',','"',
         '^','`','\'','.',' '];
     let div: f32 = 255f32 / chars.len() as f32;
+    let height = (height as f32 / 2.5) as u32;
 
     let loaded_img = match image::open(dir) {
         Ok(val) => val,
@@ -16,7 +17,7 @@ fn get_image(dir: &str, width: u32, height: u32) {
     let edit_image =
         loaded_img.resize_exact(
             width,
-            height/2, //To account for the text aspect ratio
+            height, //To account for the text aspect ratio
             FilterType::Triangle).grayscale();
 
     for y in 0..height {
@@ -26,7 +27,8 @@ fn get_image(dir: &str, width: u32, height: u32) {
             //image is grayscale -> every color value represents the brightness of that pixel
             let brightness = pixel[0];
 
-            let idx =  (brightness as f32 / div) as usize;
+            //reversed because of black background
+            let idx =  chars.len() - 1 - (brightness as f32 / div) as usize;
 
             line.push(chars[idx]);
         }
