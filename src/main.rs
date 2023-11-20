@@ -2,12 +2,9 @@ use image::{GenericImageView, imageops::FilterType};
 use std::env;
 
 fn get_image(dir: &str, width: u32, height: u32) {
-    let chars = ['$','@','B','%','8','&','W','M','#','*','o','a','h','k','b','d',
-    'p','q','w','m','Z','O','0','Q','L','C','J','U','Y','X','z','c','v','u','n','x','r','j','f','t','/',
-        '\\','|','(',')','1','{','}','[',']','?','-','_','+','~','<','>','i','!','l','I',';',':',',','"',
-        '^','`','\'','.',' '];
+    let chars = ['@','M','B','H','E','N','R','#','K','W','X','D','F','P','Q','A','S','U','Z','b','d','e','h','x','*','8','G','m','&','0','4','L','O','V','Y','k','p','q','5','T','a','g','n','s','6','9','o','w','z','$','C','I','u','2','3','J','c','f','r','y','%','1','v','7','l','+','i','t','[',']','{','}','?','j','|','(',')','=','~','!','-','/','<','>','"','^','_','\'',';',',',':','`','.',' ',];
     let div: f32 = 255f32 / chars.len() as f32;
-    let height = (height as f32 / 2.5) as u32;
+    let height = (height as f32 / 2.5) as u32; //To account for the text aspect ratio
 
     let loaded_img = match image::open(dir) {
         Ok(val) => val,
@@ -17,7 +14,7 @@ fn get_image(dir: &str, width: u32, height: u32) {
     let edit_image =
         loaded_img.resize_exact(
             width,
-            height, //To account for the text aspect ratio
+            height,
             FilterType::Triangle).grayscale();
 
     for y in 0..height {
