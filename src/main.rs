@@ -15,7 +15,7 @@ fn get_image(dir: &str, width: u32, height: u32) {
         loaded_img.resize_exact(
             width,
             height,
-            FilterType::Triangle).grayscale();
+            FilterType::Lanczos3).grayscale();
 
     for y in 0..height {
         let mut line = String::new();
